@@ -34,6 +34,11 @@ export function AppointmentDetailsCard({ doctor, form, minDate, updateField, onC
       </div>
 
       <div className="mt-4 space-y-2">
+        <p className="text-sm text-muted-foreground">Doctor location: {doctor?.address || "Not provided yet"}</p>
+        <p className="text-sm text-muted-foreground">Available slots: {doctor?.availableTimes || "Contact doctor for available times"}</p>
+      </div>
+
+      <div className="mt-4 space-y-2">
         <Label>Consultation type</Label>
         <RadioGroup value={form.appointmentType} onValueChange={(value) => updateField("appointmentType", value)} className="grid gap-2">
           {doctor?.onlineConsultation ? (

@@ -11,9 +11,7 @@ export function registerAuthRoutes(app, { storage }) {
       const existing = await storage.getUserByEmail(data.email);
 
       if (existing) {
-        return res
-          .status(400)
-          .json({ message: "An account with this email already exists" });
+        return res.status(400).json({ message: "Email already exists" });
       }
 
       const passwordHash = await bcrypt.hash(data.password, 10);
@@ -38,7 +36,7 @@ export function registerAuthRoutes(app, { storage }) {
           `New ${user.role} account created`,
         );
       }
-      res.status(201).json({ ...sanitizeUser(user), csrfToken });
+      res.status(201).json({ ...sanitizeUser(user), csrfToken, medicalHistoryCompleted: Array.isArray(user.medicalHistory) && user.medicalHistory.length > 0 });
     } catch (err) {
       return sendZodError(res, err);
     }
@@ -82,7 +80,7 @@ export function registerAuthRoutes(app, { storage }) {
           `${user.role} signed in`,
         );
       }
-      res.json({ ...sanitizeUser(user), csrfToken });
+      res.json({ ...sanitizeUser(user), csrfToken, medicalHistoryCompleted: Array.isArray(user.medicalHistory) && user.medicalHistory.length > 0 });
     } catch (err) {
       return sendZodError(res, err);
     }
@@ -110,7 +108,7 @@ export function registerAuthRoutes(app, { storage }) {
     }
 
     const csrfToken = ensureCsrfToken(req);
-    res.json({ ...sanitizeUser(user), csrfToken });
+    res.json({ ...sanitizeUser(user), csrfToken, medicalHistoryCompleted: Array.isArray(user.medicalHistory) && user.medicalHistory.length > 0 });
   });
 
   app.get("/api/auth/csrf-token", (req, res) => {

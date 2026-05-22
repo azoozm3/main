@@ -12,6 +12,10 @@ export async function createAppointmentForPatient(req, payload) {
   const doctor = await storage.getUserById(payload.doctorId);
   if (!doctor || doctor.role !== "doctor") throw new Error("DOCTOR_NOT_FOUND");
   if (payload.appointmentType === "online" && !doctor.onlineConsultation) throw new Error("ONLINE_NOT_AVAILABLE");
+  const appointmentDateTime = new Date(`${payload.date}T${payload.time}`);
+  if (Number.isNaN(appointmentDateTime.getTime()) || appointmentDateTime.getTime() <= Date.now()) {
+    throw new Error("INVALID_APPOINTMENT_TIME");
+  }
 
   const capturedPayment = consumeCapturedPayment(req, payload.paymentOrderId, "appointment");
   const appointment = await storage.createAppointment({
