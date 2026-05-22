@@ -25,6 +25,18 @@ export function DoctorDetailsSection({ isEditing, profile, formData, setFormData
             <Textarea value={formData.bio} onChange={(e) => setFormData((prev) => ({ ...prev, bio: e.target.value }))} placeholder="Describe your experience and areas of expertise" className="min-h-[100px]" data-testid="input-profile-bio" />
           ) : <p className="mt-1 whitespace-pre-wrap text-sm" data-testid="text-profile-bio">{profile?.bio || "Not set"}</p>}
         </div>
+        <div>
+          <Label>Available time slots</Label>
+          {isEditing ? (
+            <Textarea
+              value={formData.availableTimes || ""}
+              onChange={(e) => setFormData((prev) => ({ ...prev, availableTimes: e.target.value }))}
+              placeholder="e.g. Mon-Fri 09:00-13:00, 17:00-20:00"
+              className="min-h-[80px]"
+              data-testid="input-profile-available-times"
+            />
+          ) : <p className="mt-1 whitespace-pre-wrap text-sm">{profile?.availableTimes || "Not set"}</p>}
+        </div>
 
         <div>
           <Label>Online consultation</Label>

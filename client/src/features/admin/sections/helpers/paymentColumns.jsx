@@ -1,8 +1,9 @@
 import { formatDate, formatLabel, formatMoney } from "@/features/admin/utils/adminFormatters";
+import { ProfileLink } from "@/components/common/ProfileLink";
 
 export function createPayoutColumns(label, actionRenderer) {
   return [
-    { key: "providerName", label },
+    { key: "providerName", label, render: (row) => <ProfileLink id={row.providerId} role={row.providerType}>{row.providerName || "—"}</ProfileLink> },
     { key: "completedCount", label: "Completed" },
     { key: "capturedCount", label: "Captured" },
     { key: "unpaidJobs", label: "Unpaid Jobs" },
@@ -18,8 +19,8 @@ export function createPayoutColumns(label, actionRenderer) {
 export const paymentDetailsColumns = [
   { key: "service", label: "Service" },
   { key: "providerType", label: "Type", render: (row) => formatLabel(row.providerType) },
-  { key: "patientName", label: "Patient" },
-  { key: "providerName", label: "Provider", render: (row) => row.providerName || "Unassigned" },
+  { key: "patientName", label: "Patient", render: (row) => <ProfileLink id={row.patientId} role="patient">{row.patientName || "—"}</ProfileLink> },
+  { key: "providerName", label: "Provider", render: (row) => <ProfileLink id={row.providerId} role={row.providerType}>{row.providerName || "Unassigned"}</ProfileLink> },
   { key: "status", label: "Status", render: (row) => formatLabel(row.status) },
   { key: "paymentStatus", label: "Payment", render: (row) => formatLabel(row.payment?.paymentStatus) },
   { key: "payoutStatus", label: "Payout", render: (row) => formatLabel(row.payment?.providerPayoutStatus) },

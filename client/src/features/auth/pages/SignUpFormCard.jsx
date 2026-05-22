@@ -6,7 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export function SignUpFormCard({ form, roles, isSigningUp, onSubmit }) {
+export function SignUpFormCard({ form, roles, isSigningUp, onSubmit, error = "" }) {
   return (
     <Card className="w-full rounded-3xl p-6 sm:p-8">
       <div className="mb-6 text-center">
@@ -45,6 +45,7 @@ export function SignUpFormCard({ form, roles, isSigningUp, onSubmit }) {
           <Button type="submit" className="w-full" disabled={isSigningUp}>
             {isSigningUp ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating account...</> : "Create account"}
           </Button>
+          {error ? <p className="rounded-xl border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">{error}</p> : null}
         </form>
       </Form>
 
