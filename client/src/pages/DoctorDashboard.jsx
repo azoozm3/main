@@ -4,6 +4,7 @@ import { LoadingScreen } from "@/components/common/LoadingScreen";
 import { ProviderDashboardHeader, ProviderDashboardShell, ProviderHeaderAction, ProviderInfoBanner } from "@/features/provider-dashboard/ProviderDashboardLayout";
 import { DoctorDashboardTabs } from "./doctor-dashboard/DoctorDashboardTabs";
 import { useDoctorDashboard } from "./doctor-dashboard/useDoctorDashboard";
+import { openProfileModal } from "@/lib/profile-modal";
 
 export default function DoctorDashboard() {
   const [, navigate] = useLocation();
@@ -34,6 +35,9 @@ export default function DoctorDashboard() {
       ) : null}
       {needsProfileCompletion ? (
         <div className="mt-2">
+          <ProviderHeaderAction onClick={() => openProfileModal()}>Open Profile</ProviderHeaderAction>
+        </div>
+      ) : null}
           <ProviderHeaderAction onClick={() => navigate("/profile")}>Open Profile</ProviderHeaderAction>
         </div>
       ) : null}

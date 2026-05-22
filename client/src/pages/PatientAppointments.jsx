@@ -8,6 +8,7 @@ import AppointmentsPageLayout from "@/features/appointments/shared/AppointmentsP
 import { APPOINTMENT_HISTORY_STATUSES } from "@/features/appointments/shared/appointmentStatusSets";
 import { usePatientAppointmentActions } from "@/features/appointments/patient/usePatientAppointmentActions";
 import { BackButton } from "@/components/common/BackButton";
+import { openProfileModal } from "@/lib/profile-modal";
 
 export default function PatientAppointments() {
   const { user } = useAuth();
@@ -39,7 +40,7 @@ export default function PatientAppointments() {
       title="Appointments"
       description="Track your booked visits."
       userLabel={user?.name || ""}
-      onProfileClick={() => navigate("/profile")}
+      onProfileClick={() => openProfileModal()}
       ProfileIcon={UserCircle}
       isLoading={isLoading}
       backButton={<BackButton to="/dashboard/patient/services" />}
