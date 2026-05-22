@@ -1,4 +1,4 @@
-import { HeartHandshake, UserCircle } from "lucide-react";
+import { ClipboardCheck, HeartHandshake, UserCircle } from "lucide-react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import { ProviderDashboardHeader, ProviderDashboardShell, ProviderDashboardTabPanel, ProviderDashboardTabs, ProviderHeaderAction, ProviderInfoBanner } from "@/features/provider-dashboard/ProviderDashboardLayout";
@@ -18,6 +18,13 @@ export default function VolunteerDashboardPageView() {
   return (
     <ProviderDashboardShell>
       <ProviderDashboardHeader title="Volunteer Dashboard" description={`Welcome, ${user?.name}. Review open requests, manage your active support tasks, and track history.`} />
+      {!user?.active ? (
+        <ProviderInfoBanner
+          icon={ClipboardCheck}
+          title="Complete your profile information"
+          description="Please complete your profile details to help the admin review and approve your account."
+        />
+      ) : null}
       <ProviderDashboardTabs defaultValue="available" tabs={tabs}>
         <ProviderDashboardTabPanel value="available"><AvailableVolunteerRequestsTab isLoading={dashboard.isLoading} items={dashboard.available} isPending={dashboard.acceptPending} onAccept={dashboard.acceptRequest} /></ProviderDashboardTabPanel>
         <ProviderDashboardTabPanel value="active"><ActiveVolunteerRequestsTab items={dashboard.active} isPending={dashboard.statusPending} onStart={(id) => dashboard.updateStatus(id, "in_progress")} onComplete={(id) => dashboard.updateStatus(id, "completed")} /></ProviderDashboardTabPanel>
