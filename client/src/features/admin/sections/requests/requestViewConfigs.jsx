@@ -1,5 +1,6 @@
 import { formatDate, formatLabel, formatMoney } from "@/features/admin/utils/adminFormatters";
 import { getAdminLocationLink } from "@/features/admin/utils/adminLocation";
+import { ProfileLink } from "@/components/common/ProfileLink";
 
 function renderMapLocation(row = {}) {
   const { text, href } = getAdminLocationLink(row);
@@ -40,8 +41,8 @@ export const emergencyRequestsConfig = {
   filterFields: REQUEST_TABLE_FILTERS,
   columns: [
     requestIdColumn,
-    { key: "patientName", label: "Patient" },
-    { key: "responderName", label: "Responder", render: (row) => row.responderName || row.providerName || "—" },
+    { key: "patientName", label: "Patient", render: (row) => <ProfileLink id={row.patientId} role="patient">{row.patientName || "—"}</ProfileLink> },
+    { key: "responderName", label: "Responder", render: (row) => <ProfileLink id={row.responderId || row.providerId} role={row.responderRole || row.providerType || "provider"}>{row.responderName || row.providerName || "—"}</ProfileLink> },
     { key: "responderRole", label: "Role", render: (row) => formatLabel(row.responderRole || "unassigned") },
     { key: "emergencyType", label: "Type", render: (row) => row.emergencyType || "—" },
     { key: "status", label: "Status", render: (row) => formatLabel(row.status) },
@@ -60,8 +61,8 @@ export const nurseRequestsConfig = {
   filterFields: REQUEST_TABLE_FILTERS,
   columns: [
     requestIdColumn,
-    { key: "patientName", label: "Patient" },
-    { key: "providerName", label: "Nurse", render: (row) => row.providerName || "—" },
+    { key: "patientName", label: "Patient", render: (row) => <ProfileLink id={row.patientId} role="patient">{row.patientName || "—"}</ProfileLink> },
+    { key: "providerName", label: "Nurse", render: (row) => <ProfileLink id={row.providerId} role="nurse">{row.providerName || "—"}</ProfileLink> },
     { key: "serviceType", label: "Service", render: (row) => row.serviceType || "—" },
     { key: "location", label: "Location", render: renderMapLocation },
     { key: "status", label: "Status", render: (row) => formatLabel(row.status) },
@@ -82,8 +83,8 @@ export const volunteerRequestsConfig = {
   filterFields: REQUEST_TABLE_FILTERS,
   columns: [
     requestIdColumn,
-    { key: "patientName", label: "Patient" },
-    { key: "providerName", label: "Volunteer", render: (row) => row.providerName || "—" },
+    { key: "patientName", label: "Patient", render: (row) => <ProfileLink id={row.patientId} role="patient">{row.patientName || "—"}</ProfileLink> },
+    { key: "providerName", label: "Volunteer", render: (row) => <ProfileLink id={row.providerId} role="volunteer">{row.providerName || "—"}</ProfileLink> },
     { key: "serviceType", label: "Service", render: (row) => row.serviceType || "—" },
     { key: "status", label: "Status", render: (row) => formatLabel(row.status) },
     { key: "location", label: "Location", render: renderMapLocation },
@@ -104,8 +105,8 @@ export const appointmentRequestsConfig = {
   ],
   columns: [
     requestIdColumn,
-    { key: "patientName", label: "Patient" },
-    { key: "providerName", label: "Doctor", render: (row) => row.providerName || "—" },
+    { key: "patientName", label: "Patient", render: (row) => <ProfileLink id={row.patientId} role="patient">{row.patientName || "—"}</ProfileLink> },
+    { key: "providerName", label: "Doctor", render: (row) => <ProfileLink id={row.providerId} role="doctor">{row.providerName || "—"}</ProfileLink> },
     { key: "specialty", label: "Specialty", render: (row) => row.specialty || "—" },
     { key: "appointmentType", label: "Type", render: (row) => formatLabel(row.appointmentType) },
     { key: "date", label: "Date", render: (row) => row.date || "—" },

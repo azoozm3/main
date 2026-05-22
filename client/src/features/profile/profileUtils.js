@@ -18,6 +18,7 @@ export function createProfileForm(profile) {
     phone: profile?.phone || "",
     address: profile?.address || "",
     specialty: profile?.specialty || "",
+    availableTimes: profile?.availableTimes || "",
     bio: profile?.bio || "",
     onlineConsultation: !!profile?.onlineConsultation,
     volunteerSupportTypes: Array.isArray(profile?.volunteerSupportTypes)
@@ -38,6 +39,7 @@ export function sanitizeProfilePayload(form) {
     phone: form.phone.trim() || null,
     address: form.address.trim() || null,
     specialty: form.specialty.trim() || null,
+    availableTimes: form.availableTimes.trim() || null,
     bio: form.bio.trim() || null,
     onlineConsultation: !!form.onlineConsultation,
     volunteerSupportTypes: Array.isArray(form.volunteerSupportTypes) && form.volunteerSupportTypes.length

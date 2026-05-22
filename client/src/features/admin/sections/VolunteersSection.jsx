@@ -3,6 +3,7 @@ import { AdminSectionCard } from "@/features/admin/components/AdminSectionCard";
 import { AdminStatCard } from "@/features/admin/components/AdminStatCard";
 import { AdminTable } from "@/features/admin/components/AdminTable";
 import { formatDate } from "@/features/admin/utils/adminFormatters";
+import { ProfileLink } from "@/components/common/ProfileLink";
 
 export function VolunteersSection({ usersData, requestsData, mutationState, onToggleActive, onDelete }) {
   const volunteers = usersData?.users || [];
@@ -23,7 +24,7 @@ export function VolunteersSection({ usersData, requestsData, mutationState, onTo
       <AdminSectionCard title="Volunteers" subtitle="All volunteer accounts in one place.">
         <AdminTable
           columns={[
-            { key: "name", label: "Name" },
+            { key: "name", label: "Name", render: (row) => <ProfileLink id={row.id || row._id} role="volunteer">{row.name}</ProfileLink> },
             { key: "email", label: "Email" },
             { key: "phone", label: "Phone" },
             { key: "rating", label: "Rating", render: (row) => row.rating || "—" },
