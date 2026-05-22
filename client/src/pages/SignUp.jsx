@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
@@ -9,16 +10,25 @@ import { SignUpFormCard } from "@/features/auth/pages/SignUpFormCard";
 export default function SignUp() {
   const [, navigate] = useLocation();
   const { signUp, isSigningUp } = useAuth();
+  const [error, setError] = useState("");
   const form = useForm({ resolver: zodResolver(schema), defaultValues: { name: "", email: "", phone: "", password: "", role: "patient" } });
 
   const onSubmit = async (values) => {
-    await signUp(values);
-    navigate("/");
+    setError("");
+    try {
+      const user = await signUp(values);
+      if (!user?.medicalHistoryCompleted) {
+        window.alert("Please complete your medical history/profile after signup.");
+      }
+      navigate("/");
+    } catch (err) {
+      setError(err?.message || "Unable to create your account right now.");
+    }
   };
 
   return (
     <AuthShell compact>
-      <SignUpFormCard form={form} roles={roles} isSigningUp={isSigningUp} onSubmit={onSubmit} />
+      <SignUpFormCard form={form} roles={roles} isSigningUp={isSigningUp} onSubmit={onSubmit} error={error} />
     </AuthShell>
   );
 }
