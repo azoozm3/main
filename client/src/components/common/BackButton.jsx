@@ -11,10 +11,17 @@ export function BackButton({
 }) {
   const [, navigate] = useLocation();
   const targetPath = to || fallbackPath;
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    navigate(targetPath);
+  };
 
   return (
     <div className={className}>
-      <Button type="button" variant="ghost" onClick={() => navigate(targetPath)} className={buttonClassName}>
+      <Button type="button" variant="ghost" onClick={handleBack} className={buttonClassName}>
         <ArrowLeft className="mr-2 h-4 w-4" /> {children}
       </Button>
     </div>

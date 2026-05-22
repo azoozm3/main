@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import path from "path";
 import session from "express-session";
 import { MongoStore } from "connect-mongo";
 import { createServer } from "http";
@@ -31,6 +32,7 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+app.use("/uploads", express.static(path.resolve(process.cwd(), "uploads")));
 app.get("/api/health", (req, res) => {
   res.status(200).json({ ok: true });
 });

@@ -3,6 +3,7 @@ import { LogOut, Loader2, Shield, ArrowLeft, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth, getRoleDashboardPath } from "@/hooks/use-auth";
+import { openProfileModal } from "@/lib/profile-modal";
 
 export function Navbar() {
   const [location, navigate] = useLocation();
@@ -71,7 +72,7 @@ export function Navbar() {
                 variant="ghost"
                 size="sm"
                 className="h-10 max-w-[9.5rem] rounded-xl px-2.5 sm:px-3"
-                onClick={() => navigate("/profile")}
+                onClick={openProfileModal}
                 data-testid="button-nav-profile"
               >
                 <UserCircle className="h-4 w-4 shrink-0 sm:mr-1" />

@@ -10,6 +10,15 @@ export default function HealthRecordEditor({ value = [], onChange }) {
     const nextRows = rows.map((row, rowIndex) => rowIndex === index ? { ...row, [key]: nextValue } : row);
     onChange(nextRows);
   };
+  const uploadPdf = async (index, file) => {
+    if (!file) return;
+    const body = new FormData();
+    body.append("file", file);
+    const response = await fetch("/api/profiles/medical-history/upload", { method: "POST", body, credentials: "include" });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data?.message || "Failed to upload PDF");
+    updateRow(index, "filePath", data.filePath);
+  };
 
   const addRow = () => onChange([...rows, createEmptyMedicalHistoryRow()]);
   const removeRow = (index) => onChange(rows.filter((_, rowIndex) => rowIndex !== index));
@@ -34,6 +43,11 @@ export default function HealthRecordEditor({ value = [], onChange }) {
           <div>
             <label className="mb-1 block text-sm font-medium">Details</label>
             <input className="w-full rounded-md border px-3 py-2" value={row.details || ""} onChange={(e) => updateRow(index, "details", e.target.value)} placeholder="Write the health detail here" />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium">PDF file</label>
+            <input type="file" accept="application/pdf" className="w-full rounded-md border px-3 py-2" onChange={(e) => uploadPdf(index, e.target.files?.[0])} />
+            {row.filePath ? <p className="mt-1 text-xs text-muted-foreground">Uploaded: {row.filePath}</p> : null}
           </div>
 
           <div className="flex justify-end">
