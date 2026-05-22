@@ -29,6 +29,7 @@ const medicalHistoryRowSchema = z.object({
   title: z.string().trim().min(1, "Title is required"),
   details: z.string().trim().min(1, "Details are required"),
   recordDate: z.string().trim().optional().nullable(),
+  filePath: z.string().trim().optional().nullable(),
 });
 
 export const updateProfileSchema = z.object({
@@ -38,6 +39,7 @@ export const updateProfileSchema = z.object({
   specialty: z.string().optional().nullable(),
   medicalHistory: z.array(medicalHistoryRowSchema).optional().nullable(),
   bio: z.string().optional().nullable(),
+  availableTimes: z.string().optional().nullable(),
   onlineConsultation: z.boolean().optional(),
   volunteerSupportTypes: z.array(z.enum(volunteerServiceOptions)).optional().nullable(),
   volunteerAvailability: z.enum(volunteerAvailabilityOptions).optional().nullable(),

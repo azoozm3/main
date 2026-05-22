@@ -12,7 +12,10 @@ export default function SignUp() {
   const form = useForm({ resolver: zodResolver(schema), defaultValues: { name: "", email: "", phone: "", password: "", role: "patient" } });
 
   const onSubmit = async (values) => {
-    await signUp(values);
+    const user = await signUp(values);
+    if (!user?.medicalHistoryCompleted) {
+      window.alert("Please complete your medical history/profile after signup.");
+    }
     navigate("/");
   };
 
