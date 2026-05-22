@@ -3,6 +3,7 @@ import { AdminSectionCard } from "@/features/admin/components/AdminSectionCard";
 import { AdminStatCard } from "@/features/admin/components/AdminStatCard";
 import { AdminTable } from "@/features/admin/components/AdminTable";
 import { formatDate, formatLabel, formatMoney } from "@/features/admin/utils/adminFormatters";
+import { ProfileLink } from "@/components/common/ProfileLink";
 
 export function UsersSection({ title, subtitle, data, mutationState, onToggleActive, onDelete }) {
   const users = data?.users || [];
@@ -11,7 +12,7 @@ export function UsersSection({ title, subtitle, data, mutationState, onToggleAct
   const showProviderColumns = users.length > 0 && users.every((user) => user.role === role) && ["doctor", "nurse"].includes(role);
 
   const columns = [
-    { key: "name", label: "Name" },
+    { key: "name", label: "Name", render: (row) => <ProfileLink id={row.id || row._id} role={row.role}>{row.name}</ProfileLink> },
     { key: "role", label: "Role", render: (row) => formatLabel(row.role) },
     { key: "email", label: "Email" },
     { key: "phone", label: "Phone" },
@@ -36,7 +37,7 @@ export function UsersSection({ title, subtitle, data, mutationState, onToggleAct
       render: (row) => (
         <div className="flex flex-wrap gap-2">
           <Button type="button" variant="outline" size="sm" disabled={mutationState} onClick={() => onToggleActive(row)}>
-            {row.active ? "Disable" : "Enable"}
+            {row.active ? "Disable" : "Approve"}
           </Button>
           <Button type="button" variant="destructive" size="sm" disabled={mutationState} onClick={() => onDelete(row)}>
             Delete

@@ -18,6 +18,11 @@ const medicalHistoryRowSchema = new mongoose.Schema(
       default: "",
       trim: true,
     },
+    filePath: {
+      type: String,
+      default: "",
+      trim: true,
+    },
   },
   { _id: true },
 );
@@ -39,6 +44,7 @@ const userSchema = new mongoose.Schema(
     yearsOfExperience: { type: Number, default: null, min: 0 },
     medicalHistory: { type: [medicalHistoryRowSchema], default: [] },
     bio: { type: String, default: null },
+    availableTimes: { type: String, default: null, trim: true },
     onlineConsultation: { type: Boolean, default: false },
     volunteerSupportTypes: { type: [String], default: [] },
     volunteerAvailability: { type: String, default: null },

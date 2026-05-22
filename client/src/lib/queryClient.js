@@ -5,8 +5,9 @@ let csrfTokenCache = null;
 
 async function throwIfResNotOk(res) {
   if (!res.ok) {
-    const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
+    const payload = await res.clone().json().catch(() => null);
+    const message = payload?.message || (await res.text()) || res.statusText;
+    throw new Error(message);
   }
 }
 
