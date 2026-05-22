@@ -38,6 +38,7 @@ export function VolunteersSection({ usersData, requestsData, mutationState, onTo
               render: (row) => (
                 <div className="flex flex-wrap gap-2">
                   <Button type="button" variant="outline" size="sm" disabled={mutationState} onClick={() => onToggleActive(row)}>
+                    {row.active ? "Disable" : "Approve"}
                     {row.active ? "Approved" : "Approve"}
                   </Button>
                   <Button type="button" variant="destructive" size="sm" disabled={mutationState} onClick={() => onDelete(row)}>

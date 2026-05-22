@@ -38,6 +38,7 @@ export function UsersSection({ title, subtitle, data, mutationState, onToggleAct
       render: (row) => (
         <div className="flex flex-wrap gap-2">
           <Button type="button" variant="outline" size="sm" disabled={mutationState} onClick={() => onToggleActive(row)}>
+            {row.active ? "Disable" : "Approve"}
             {showApprovalAction ? (row.active ? "Approved" : "Approve") : (row.active ? "Disable" : "Enable")}
           </Button>
           <Button type="button" variant="destructive" size="sm" disabled={mutationState} onClick={() => onDelete(row)}>

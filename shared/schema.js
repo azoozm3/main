@@ -37,6 +37,8 @@ export const updateProfileSchema = z.object({
   phone: z.string().optional().nullable(),
   address: z.string().optional().nullable(),
   specialty: z.string().optional().nullable(),
+  licenseNumber: z.string().optional().nullable(),
+  yearsOfExperience: z.coerce.number().min(0).optional().nullable(),
   medicalHistory: z.array(medicalHistoryRowSchema).optional().nullable(),
   bio: z.string().optional().nullable(),
   availableTimes: z.string().optional().nullable(),
