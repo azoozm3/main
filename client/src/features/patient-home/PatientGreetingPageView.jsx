@@ -3,6 +3,7 @@ import { QuickLinkCard, ActiveEmergencyCard, ChatbotFab, HelpButton, patientGree
 import PatientGreetingHero from "@/features/patient-home/PatientGreetingHero";
 import { useAuth } from "@/hooks/use-auth";
 import { useMyEmergencyRequests } from "@/hooks/use-emergency-requests";
+import { openProfileModal } from "@/lib/profile-modal";
 
 export default function PatientGreetingPageView() {
   const { user } = useAuth();
@@ -21,7 +22,7 @@ export default function PatientGreetingPageView() {
       </div>
 
       <div className="mt-4 w-full max-w-lg">
-        <QuickLinkCard {...patientGreetingQuickLinks.profile} delay={0.5} onClick={() => navigate("/profile")} testId="button-patient-profile" />
+        <QuickLinkCard {...patientGreetingQuickLinks.profile} delay={0.5} onClick={() => openProfileModal()} testId="button-patient-profile" />
       </div>
 
       <ChatbotFab onClick={() => navigate("/dashboard/patient/chatbot")} />

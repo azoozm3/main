@@ -50,7 +50,7 @@ export default function AdminDashboard() {
   const handleToggleActive = async (user) => {
     try {
       await updateUserMutation.mutateAsync({ userId: user.id, active: !user.active });
-      toast({ title: "Updated", description: `${user.name} is now ${user.active ? "inactive" : "active"}.` });
+      toast({ title: "Updated", description: `${user.name} is now ${user.active ? "disabled" : "approved"}.` });
     } catch (error) {
       toast({ title: "Update failed", description: error.message, variant: "destructive" });
     }

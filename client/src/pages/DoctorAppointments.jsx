@@ -8,6 +8,7 @@ import AppointmentsPageLayout from "@/features/appointments/shared/AppointmentsP
 import { APPOINTMENT_HISTORY_STATUSES } from "@/features/appointments/shared/appointmentStatusSets";
 import { useDoctorAppointmentActions } from "@/features/appointments/doctor/useDoctorAppointmentActions";
 import { BackButton } from "@/components/common/BackButton";
+import { openProfileModal } from "@/lib/profile-modal";
 
 export default function DoctorAppointments() {
   const { user } = useAuth();
@@ -51,7 +52,7 @@ export default function DoctorAppointments() {
       title="Appointments"
       description="Review and manage your schedule."
       userLabel={`Dr. ${user?.name || ""}`}
-      onProfileClick={() => navigate("/profile")}
+      onProfileClick={() => openProfileModal()}
       ProfileIcon={UserCircle}
       isLoading={isLoading}
       backButton={<BackButton to="/dashboard/doctor" />}
