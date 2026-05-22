@@ -24,6 +24,11 @@ export default function SignUp() {
     } catch (err) {
       setError(err?.message || "Unable to create your account right now.");
     }
+    const user = await signUp(values);
+    if (!user?.medicalHistoryCompleted) {
+      window.alert("Please complete your medical history/profile after signup.");
+    }
+    navigate("/");
   };
 
   return (

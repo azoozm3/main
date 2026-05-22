@@ -8,8 +8,10 @@ import {
   ProviderInfoBanner,
 } from "@/features/provider-dashboard/ProviderDashboardLayout";
 import { openProfileModal } from "@/lib/profile-modal";
+import { ProviderDashboardHeader, ProviderDashboardShell, ProviderHeaderAction, ProviderInfoBanner } from "@/features/provider-dashboard/ProviderDashboardLayout";
 import { DoctorDashboardTabs } from "./doctor-dashboard/DoctorDashboardTabs";
 import { useDoctorDashboard } from "./doctor-dashboard/useDoctorDashboard";
+import { openProfileModal } from "@/lib/profile-modal";
 
 export default function DoctorDashboard() {
   const [, navigate] = useLocation();
@@ -27,6 +29,28 @@ export default function DoctorDashboard() {
         description="Manage emergency cases, track routes, and support patients in real time."
         actions={<ProviderHeaderAction icon={CalendarCheck} onClick={() => navigate("/dashboard/doctor/appointments")}>Appointments</ProviderHeaderAction>}
       />
+      {needsProfileCompletion ? (
+        <ProviderInfoBanner
+          icon={ClipboardCheck}
+          title="Complete your profile information"
+          description="Please add your specialty, clinic location, and available times so patients can book you easily."
+        />
+      ) : null}
+      {needsProfileCompletion ? (
+        <div className="mt-2">
+          <ProviderHeaderAction onClick={() => openProfileModal()}>Open Profile</ProviderHeaderAction>
+        </div>
+      ) : null}
+          <ProviderHeaderAction onClick={() => navigate("/profile")}>Open Profile</ProviderHeaderAction>
+        </div>
+      ) : null}
+      {!dashboard.user?.active ? (
+        <ProviderInfoBanner
+          icon={ClipboardCheck}
+          title="Complete your profile information"
+          description="Please complete your profile details to help the admin review and approve your account."
+        />
+      ) : null}
 
       {needsProfileCompletion ? (
         <ProviderInfoBanner

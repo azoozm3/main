@@ -1,3 +1,4 @@
+import { Switch, Route } from "wouter";
 import { useEffect, useState } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Route, Switch } from "wouter";
@@ -11,6 +12,9 @@ import NotFound from "@/pages/NotFound";
 import PatientChatbot from "@/pages/PatientChatbot";
 import ProfilePage from "@/pages/ProfilePage";
 import { protectedRoutes, publicRoutes } from "@/routes/routeConfig";
+import ProfilePage from "@/pages/ProfilePage";
+import PatientChatbot from "@/pages/PatientChatbot";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 function AppRouter() {
   return (
@@ -47,6 +51,19 @@ export default function App() {
       window.removeEventListener("open-profile-modal", profileHandler);
       window.removeEventListener("open-chatbot-modal", chatbotHandler);
     };
+  useEffect(() => {
+    const handler = () => setProfileOpen(true);
+    const chatbotHandler = () => setChatbotOpen(true);
+    window.addEventListener("open-profile-modal", handler);
+    window.addEventListener("open-chatbot-modal", chatbotHandler);
+    return () => {
+      window.removeEventListener("open-profile-modal", handler);
+      window.removeEventListener("open-chatbot-modal", chatbotHandler);
+    };
+  useEffect(() => {
+    const handler = () => setProfileOpen(true);
+    window.addEventListener("open-profile-modal", handler);
+    return () => window.removeEventListener("open-profile-modal", handler);
   }, []);
 
   return (
