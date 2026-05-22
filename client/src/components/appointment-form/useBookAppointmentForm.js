@@ -11,7 +11,11 @@ export function useBookAppointmentForm(doctor) {
   const doctorId = doctor?.id || doctor?._id || "";
   const minDate = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const canSubmit = useMemo(
-    () => Boolean(doctorId && form.date && form.time),
+    () => {
+      if (!(doctorId && form.date && form.time)) return false;
+      const selected = new Date(`${form.date}T${form.time}`);
+      return Number.isFinite(selected.getTime()) && selected.getTime() > Date.now();
+    },
     [doctorId, form.date, form.time],
   );
   const updateField = (key, value) =>
