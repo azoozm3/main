@@ -37,6 +37,13 @@ export default function DoctorDashboard() {
           <ProviderHeaderAction onClick={() => navigate("/profile")}>Open Profile</ProviderHeaderAction>
         </div>
       ) : null}
+      {!dashboard.user?.active ? (
+        <ProviderInfoBanner
+          icon={ClipboardCheck}
+          title="Complete your profile information"
+          description="Please complete your profile details to help the admin review and approve your account."
+        />
+      ) : null}
 
       <DoctorDashboardTabs
         activeTab={dashboard.activeTab}
