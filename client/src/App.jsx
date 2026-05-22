@@ -50,6 +50,10 @@ export default function App() {
       window.removeEventListener("open-profile-modal", handler);
       window.removeEventListener("open-chatbot-modal", chatbotHandler);
     };
+  useEffect(() => {
+    const handler = () => setProfileOpen(true);
+    window.addEventListener("open-profile-modal", handler);
+    return () => window.removeEventListener("open-profile-modal", handler);
   }, []);
 
   return (

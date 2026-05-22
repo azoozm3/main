@@ -49,6 +49,10 @@ export default function AdminDashboard() {
   };
   const handleToggleActive = async (user) => {
     try {
+      if (["nurse", "volunteer"].includes(user.role) && user.active) {
+        toast({ title: "Already approved", description: `${user.name} is already approved.` });
+        return;
+      }
       await updateUserMutation.mutateAsync({ userId: user.id, active: !user.active });
       toast({ title: "Updated", description: `${user.name} is now ${user.active ? "disabled" : "approved"}.` });
     } catch (error) {

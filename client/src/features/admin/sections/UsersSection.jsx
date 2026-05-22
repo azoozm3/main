@@ -10,6 +10,7 @@ export function UsersSection({ title, subtitle, data, mutationState, onToggleAct
   const summary = data?.summary || {};
   const role = users[0]?.role || "";
   const showProviderColumns = users.length > 0 && users.every((user) => user.role === role) && ["doctor", "nurse"].includes(role);
+  const showApprovalAction = role === "nurse" || role === "volunteer";
 
   const columns = [
     { key: "name", label: "Name", render: (row) => <ProfileLink id={row.id || row._id} role={row.role}>{row.name}</ProfileLink> },
@@ -38,6 +39,7 @@ export function UsersSection({ title, subtitle, data, mutationState, onToggleAct
         <div className="flex flex-wrap gap-2">
           <Button type="button" variant="outline" size="sm" disabled={mutationState} onClick={() => onToggleActive(row)}>
             {row.active ? "Disable" : "Approve"}
+            {showApprovalAction ? (row.active ? "Approved" : "Approve") : (row.active ? "Disable" : "Enable")}
           </Button>
           <Button type="button" variant="destructive" size="sm" disabled={mutationState} onClick={() => onDelete(row)}>
             Delete
